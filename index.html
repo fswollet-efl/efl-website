@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Engaged Frequency Lab (EFL) - Official Website</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#1B2E1B',
+              'primary-light': '#F5F0E8',
+              accent: '#D4A847',
+              'accent-hover': '#C49A3A',
+              secondary: '#2A3F2A',
+              sage: '#9DAF92',
+              dark: '#1a1a1a',
+              crisis: '#C0392B',
+              footer: '#0F1F0F',
+            },
+          },
+        },
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+      :root {
+        --primary: #1B2E1B;
+        --primary-light: #F5F0E8;
+        --accent: #D4A847;
+        --accent-hover: #C49A3A;
+        --secondary: #2A3F2A;
+        --sage: #9DAF92;
+        --dark: #1a1a1a;
+        --crisis: #C0392B;
+        --footer: #0F1F0F;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        color: var(--dark);
+        margin: 0;
+        overflow-x: hidden;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-family: Georgia, 'Times New Roman', serif;
+      }
+
+      /* Navbar styles */
+      .navbar-main {
+        transition: background-color 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+      }
+
+      .navbar-scrolled {
+        background-color: rgba(27, 46, 27, 0.97) !important;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+      }
+
+      /* Hero parallax */
+      .hero-bg {
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+      }
+
+      @media (max-width: 768px) {
+        .hero-bg {
+          background-attachment: scroll;
+        }
+      }
+
+      /* Section animations */
+      .fade-section {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      }
+
+      .fade-section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Pulse animation for scroll indicator */
+      @keyframes gentlePulse {
+        0%, 100% { opacity: 0.5; transform: translateY(0); }
+        50% { opacity: 1; transform: translateY(8px); }
+      }
+
+      .pulse-arrow {
+        animation: gentlePulse 2.5s ease-in-out infinite;
+      }
+
+      /* Card hover effects */
+      .card-hover {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .card-hover:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Button transitions */
+      .btn-transition {
+        transition: all 0.3s ease;
+      }
+
+      .btn-transition:hover {
+        transform: translateY(-1px);
+      }
+
+      /* Nav link underline animation */
+      .nav-link {
+        position: relative;
+      }
+
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--accent);
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      /* Section header line */
+      .section-line {
+        width: 60px;
+        height: 3px;
+        background-color: var(--accent);
+        margin: 12px auto 0;
+        border-radius: 2px;
+      }
+
+      /* Book mockup shadow */
+      .book-shadow {
+        box-shadow: 8px 12px 30px rgba(0, 0, 0, 0.35), 2px 2px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Timeline step */
+      .step-circle {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Georgia, serif;
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+
+      /* Mobile menu */
+      .mobile-menu-overlay {
+        transition: opacity 0.35s ease, visibility 0.35s ease;
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .mobile-menu-overlay.open {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .mobile-menu-panel {
+        transition: transform 0.35s ease;
+        transform: translateX(100%);
+      }
+
+      .mobile-menu-overlay.open .mobile-menu-panel {
+        transform: translateX(0);
+      }
+
+      /* Crisis badge pulse */
+      @keyframes crisisPulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.4); }
+        50% { box-shadow: 0 0 0 4px rgba(192, 57, 43, 0); }
+      }
+
+      .crisis-badge {
+        animation: crisisPulse 3s ease-in-out infinite;
+      }
+
+      /* Stat number */
+      .stat-number {
+        font-family: Georgia, serif;
+        font-size: 2.75rem;
+        font-weight: 700;
+        color: var(--accent);
+        line-height: 1.1;
+      }
+
+      /* Pull quote */
+      .pull-quote {
+        font-family: Georgia, serif;
+        font-style: italic;
+        line-height: 1.7;
+      }
+
+      /* Resource card link styling */
+      .resource-link {
+        color: var(--accent-hover);
+        text-decoration: underline;
+        text-underline-offset: 2px;
+        transition: color 0.2s;
+      }
+
+      .resource-link:hover {
+        color: var(--accent);
+      }
+
+      /* Form input styling */
+      .form-input {
+        border: 2px solid #d1c9ba;
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-size: 1rem;
+        width: 100%;
+        background: #fff;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(212, 168, 71, 0.15);
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--primary);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--sage);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--accent);
+      }
+    </style>
+</head>
+<body data-id="0" class="bg-primary-light">
+    <app-icon data-id="1" hidden data-icon="shield" data-palette="Green"></app-icon>
+
+    <!-- STICKY NAVIGATION -->
+    <nav data-id="2" id="navbar-e8f1" class="navbar-main fixed top-0 left-0 w-full z-50 bg-transparent">
+      <div data-id="3" class="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 flex items-center justify-between h-16 md:h-18">
+        <!-- Logo -->
+        <a data-id="4" href="#" class="text-accent font-bold text-xl md:text-2xl tracking-wide" style="font-family: Georgia, serif;">EFL™</a>
+
+        <!-- Desktop nav -->
+        <div data-id="5" id="desktop-nav-c3a9" class="hidden md:flex items-center gap-6 lg:gap-8">
+          <a data-id="6" href="#mission" class="nav-link text-primary-light text-sm lg:text-base hover:text-accent transition-colors">Mission</a>
+          <a data-id="7" href="#services" class="nav-link text-primary-light text-sm lg:text-base hover:text-accent transition-colors">Services</a>
+          <a data-id="8" href="#roots-remedies" class="nav-link text-primary-light text-sm lg:text-base hover:text-accent transition-colors">Roots &amp; Remedies</a>
+          <a data-id="9" href="#science" class="nav-link text-primary-light text-sm lg:text-base hover:text-accent transition-colors">Science</a>
+          <a data-id="10" href="#resources" class="nav-link text-primary-light text-sm lg:text-base hover:text-accent transition-colors">Resources</a>
+          <a data-id="11" href="#contact" class="nav-link text-primary-light text-sm lg:text-base hover:text-accent transition-colors">Get Involved</a>
+          <a data-id="12" href="#crisis-bar" class="crisis-badge inline-flex items-center gap-1.5 bg-crisis text-white text-xs font-bold px-3 py-1.5 rounded-full hover:bg-red-700 transition-colors">
+            <i data-id="13" data-lucide="phone" class="w-3.5 h-3.5"></i> Crisis? 988
+          </a>
+        </div>
+
+        <!-- Mobile: crisis + hamburger -->
+        <div data-id="14" class="flex items-center gap-3 md:hidden">
+          <a data-id="15" href="#crisis-bar" class="crisis-badge inline-flex items-center gap-1 bg-crisis text-white text-xs font-bold px-2.5 py-1.5 rounded-full">
+            <i data-id="16" data-lucide="phone" class="w-3 h-3"></i> 988
+          </a>
+          <button data-id="17" id="mobile-menu-btn-a4c2" class="p-2 text-primary-light hover:text-accent transition-colors" aria-label="Open menu">
+            <i data-id="18" data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MOBILE MENU OVERLAY -->
+    <div data-id="19" id="mobile-menu-overlay-b7d3" class="mobile-menu-overlay fixed inset-0 z-[60] bg-black/50 md:hidden">
+      <div data-id="20" class="mobile-menu-panel fixed right-0 top-0 bottom-0 w-[280px] bg-primary flex flex-col">
+        <div data-id="21" class="flex items-center justify-between px-5 py-4 border-b border-secondary">
+          <span data-id="22" class="text-accent font-bold text-xl" style="font-family: Georgia, serif;">EFL™</span>
+          <button data-id="23" id="mobile-menu-close-d2e5" class="p-2 text-primary-light hover:text-accent transition-colors" aria-label="Close menu">
+            <i data-id="24" data-lucide="x" class="w-6 h-6"></i>
+          </button>
+        </div>
+        <div data-id="25" class="flex flex-col gap-1 px-4 py-6">
+          <a data-id="26" href="#mission" class="mobile-nav-link block px-4 py-3 text-primary-light hover:text-accent hover:bg-secondary rounded-lg transition-all text-base">Mission</a>
+          <a data-id="27" href="#services" class="mobile-nav-link block px-4 py-3 text-primary-light hover:text-accent hover:bg-secondary rounded-lg transition-all text-base">Services</a>
+          <a data-id="28" href="#roots-remedies" class="mobile-nav-link block px-4 py-3 text-primary-light hover:text-accent hover:bg-secondary rounded-lg transition-all text-base">Roots &amp; Remedies</a>
+          <a data-id="29" href="#science" class="mobile-nav-link block px-4 py-3 text-primary-light hover:text-accent hover:bg-secondary rounded-lg transition-all text-base">Science</a>
+          <a data-id="30" href="#resources" class="mobile-nav-link block px-4 py-3 text-primary-light hover:text-accent hover:bg-secondary rounded-lg transition-all text-base">Resources</a>
+          <a data-id="31" href="#contact" class="mobile-nav-link block px-4 py-3 text-primary-light hover:text-accent hover:bg-secondary rounded-lg transition-all text-base">Get Involved</a>
+        </div>
+        <div data-id="32" class="mt-auto px-4 pb-6">
+          <a data-id="33" href="#crisis-bar" class="mobile-nav-link flex items-center justify-center gap-2 bg-crisis text-white font-bold py-3 rounded-lg hover:bg-red-700 transition-colors">
+            <i data-id="34" data-lucide="phone" class="w-4 h-4"></i> Veterans Crisis Line: 988
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section data-id="35" id="hero-f3a1" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <div data-id="36" class="absolute inset-0">
+        <img data-id="37" src="https://ts3.mm.bing.net/th?id=OIP.jhyhhiuDKVUsSRZnjmvyrgHaEK&pid=15.1&o=7&rm=3" alt="Serene misty lake at sunrise surrounded by forest — symbolizing peace, healing, and nature" class="w-full h-full object-cover" />
+        <div data-id="38" class="absolute inset-0" style="background: linear-gradient(180deg, rgba(27,46,27,0.75) 0%, rgba(27,46,27,0.5) 40%, rgba(27,46,27,0.7) 100%);"></div>
+      </div>
+      <div data-id="39" class="relative z-10 text-center px-5 max-w-4xl mx-auto">
+        <p data-id="40" class="text-accent text-xs md:text-sm tracking-[0.25em] uppercase mb-4 md:mb-6 font-semibold">Engaged Frequency Lab (EFL)™</p>
+        <h1 data-id="41" class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-primary-light leading-tight mb-5 md:mb-7" style="font-family: Georgia, serif; font-weight: 400;">Frequency. Focus. Forward.</h1>
+        <p data-id="42" class="text-primary-light/90 text-base md:text-lg lg:text-xl max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">A veteran-founded wellness platform dedicated to education, advocacy, and holistic healing for those who served.</p>
+        <div data-id="43" class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a data-id="44" href="#resources" class="btn-transition inline-flex items-center gap-2 bg-accent text-primary font-semibold px-7 py-3.5 rounded-lg hover:bg-accent-hover shadow-lg text-base min-h-[44px]">
+            <i data-id="45" data-lucide="compass" class="w-5 h-5"></i> Explore Resources
+          </a>
+          <a data-id="46" href="#mission" class="btn-transition inline-flex items-center gap-2 border-2 border-primary-light/60 text-primary-light font-semibold px-7 py-3.5 rounded-lg hover:border-accent hover:text-accent text-base min-h-[44px]">
+            <i data-id="47" data-lucide="target" class="w-5 h-5"></i> Our Mission
+          </a>
+        </div>
+      </div>
+      <!-- Scroll indicator -->
+      <div data-id="48" class="absolute bottom-8 left-1/2 -translate-x-1/2 pulse-arrow text-primary-light/60">
+        <i data-id="49" data-lucide="chevron-down" class="w-8 h-8"></i>
+      </div>
+    </section>
+
+    <main data-id="50">
+
+    <!-- MISSION SECTION -->
+    <section data-id="51" id="mission" class="bg-primary-light py-16 md:py-24 lg:py-28">
+      <div data-id="52" class="fade-section max-w-6xl mx-auto px-5 md:px-8">
+        <div data-id="53" class="text-center mb-10 md:mb-14">
+          <h2 data-id="54" class="text-3xl md:text-4xl text-dark" style="font-family: Georgia, serif;">Our Mission</h2>
+          <div data-id="55" class="section-line"></div>
+        </div>
+
+        <!-- Pull quote -->
+        <blockquote data-id="56" class="pull-quote text-lg md:text-xl lg:text-2xl text-center text-dark/80 max-w-4xl mx-auto mb-12 md:mb-16 px-4">
+          "Too many veterans are suffering in silence. Too many are self-medicating without guidance, without information, without the safety net of professional support. <span data-id="57" class="text-accent font-semibold not-italic">They deserve better.</span>"
+        </blockquote>
+
+        <!-- Two columns -->
+        <div data-id="58" class="grid md:grid-cols-2 gap-8 md:gap-12 mb-14 md:mb-18">
+          <div data-id="59" class="text-dark/80 text-base md:text-lg leading-relaxed">
+            <p data-id="60">Engaged Frequency Lab (EFL)™ was founded by a United States Army Captain who understands the weight of service — and the silence that follows it. After two decades of military service and a personal journey through the VA system, the founder recognized a critical gap: veterans needed access to credible, well-researched information about the full spectrum of healing options available to them — not just what fits inside a prescription bottle.</p>
+          </div>
+          <div data-id="61" class="text-dark/80 text-base md:text-lg leading-relaxed">
+            <p data-id="62">EFL exists to fill that gap. We are an education-first platform — we don't sell supplements, we don't replace doctors, and we don't promise miracles. What we offer is something many veterans have never received: honest, science-backed information about emerging therapies, plant-based medicine, holistic practices, and the legal landscape surrounding them. We believe informed veterans make empowered decisions about their own healing.</p>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div data-id="63" class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div data-id="64" class="card-hover bg-white rounded-xl p-6 md:p-8 text-center shadow-md border border-sage/20">
+            <div data-id="65" class="stat-number mb-2">22+</div>
+            <p data-id="66" class="text-dark/70 text-sm md:text-base">Veterans lost to suicide daily in the U.S.</p>
+          </div>
+          <div data-id="67" class="card-hover bg-white rounded-xl p-6 md:p-8 text-center shadow-md border border-sage/20">
+            <div data-id="68" class="stat-number mb-2">1,000+</div>
+            <p data-id="69" class="text-dark/70 text-sm md:text-base">Florida veterans helped with free MMJ cards through Veterans Cannabis Care</p>
+          </div>
+          <div data-id="70" class="card-hover bg-white rounded-xl p-6 md:p-8 text-center shadow-md border border-sage/20">
+            <div data-id="71" class="stat-number mb-2">9</div>
+            <p data-id="72" class="text-dark/70 text-sm md:text-base">VA medical centers now conducting psychedelic therapy research</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOUR PILLARS SECTION -->
+    <section data-id="73" id="services" class="bg-primary py-16 md:py-24 lg:py-28">
+      <div data-id="74" class="fade-section max-w-6xl mx-auto px-5 md:px-8">
+        <div data-id="75" class="text-center mb-5">
+          <h2 data-id="76" class="text-3xl md:text-4xl text-primary-light" style="font-family: Georgia, serif;">The Four Pillars</h2>
+          <div data-id="77" class="section-line"></div>
+        </div>
+        <p data-id="78" class="text-sage text-center text-base md:text-lg mb-10 md:mb-14 max-w-2xl mx-auto">EFL operates across four integrated domains to serve the veteran community</p>
+
+        <div data-id="79" class="grid sm:grid-cols-2 gap-6 md:gap-8">
+          <!-- Education -->
+          <div data-id="80" class="card-hover bg-secondary rounded-xl p-6 md:p-8 border border-sage/15">
+            <div data-id="81" class="w-12 h-12 flex items-center justify-center rounded-lg bg-accent/15 mb-5">
+              <svg data-id="82" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4A847" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path data-id="83" d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/><path data-id="84" d="M8 7h6"/><path data-id="85" d="M8 11h4"/></svg>
+            </div>
+            <h3 data-id="86" class="text-primary-light text-xl md:text-2xl mb-3" style="font-family: Georgia, serif;">Education</h3>
+            <p data-id="87" class="text-sage text-sm md:text-base leading-relaxed">Research-driven content on psilocybin-assisted therapy, medical cannabis, kratom, terpene science, and traditional herbalism. Our flagship publication, <em data-id="88">Roots &amp; Remedies</em>, is a comprehensive guide to holistic healing for veterans in the Tallahassee region and beyond.</p>
+          </div>
+
+          <!-- Consulting -->
+          <div data-id="89" class="card-hover bg-secondary rounded-xl p-6 md:p-8 border border-sage/15">
+            <div data-id="90" class="w-12 h-12 flex items-center justify-center rounded-lg bg-accent/15 mb-5">
+              <svg data-id="91" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4A847" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle data-id="92" cx="12" cy="12" r="10"/><polygon data-id="93" points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+            </div>
+            <h3 data-id="94" class="text-primary-light text-xl md:text-2xl mb-3" style="font-family: Georgia, serif;">Consulting</h3>
+            <p data-id="95" class="text-sage text-sm md:text-base leading-relaxed">One-on-one and group guidance for veterans navigating the complex landscape of alternative therapies. We help you understand your options, find qualified providers, access clinical trials, and make informed decisions about your wellness journey.</p>
+          </div>
+
+          <!-- Advocacy -->
+          <div data-id="96" class="card-hover bg-secondary rounded-xl p-6 md:p-8 border border-sage/15">
+            <div data-id="97" class="w-12 h-12 flex items-center justify-center rounded-lg bg-accent/15 mb-5">
+              <svg data-id="98" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4A847" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path data-id="99" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path data-id="100" d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <h3 data-id="101" class="text-primary-light text-xl md:text-2xl mb-3" style="font-family: Georgia, serif;">Advocacy</h3>
+            <p data-id="102" class="text-sage text-sm md:text-base leading-relaxed">Policy education and veteran rights awareness. We track legislation affecting veteran access to cannabis, psychedelics, and holistic therapies — including VHA Directive 1315, the June 2025 House amendment, and state-level regulatory changes.</p>
+          </div>
+
+          <!-- Media & Content -->
+          <div data-id="103" class="card-hover bg-secondary rounded-xl p-6 md:p-8 border border-sage/15">
+            <div data-id="104" class="w-12 h-12 flex items-center justify-center rounded-lg bg-accent/15 mb-5">
+              <svg data-id="105" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4A847" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path data-id="106" d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path data-id="107" d="M19 10v2a7 7 0 0 1-14 0v-2"/><line data-id="108" x1="12" y1="19" x2="12" y2="22"/></svg>
+            </div>
+            <h3 data-id="109" class="text-primary-light text-xl md:text-2xl mb-3" style="font-family: Georgia, serif;">Media &amp; Content</h3>
+            <p data-id="110" class="text-sage text-sm md:text-base leading-relaxed">Ebooks, presentations, resource guides, and community outreach materials — all free, all evidence-based, all designed for veterans and the people who support them. Every piece of content is an original EFL™ production.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROOTS & REMEDIES SECTION -->
+    <section data-id="111" id="roots-remedies" class="bg-primary-light py-16 md:py-24 lg:py-28">
+      <div data-id="112" class="fade-section max-w-6xl mx-auto px-5 md:px-8">
+        <div data-id="113" class="text-center mb-5">
+          <h2 data-id="114" class="text-3xl md:text-4xl text-dark" style="font-family: Georgia, serif;">Roots &amp; Remedies</h2>
+          <div data-id="115" class="section-line"></div>
+        </div>
+        <p data-id="116" class="text-dark/60 text-center text-base md:text-lg mb-10 md:mb-14">Our Flagship Publication</p>
+
+        <div data-id="117" class="grid md:grid-cols-2 gap-8 md:gap-14 items-center">
+          <!-- Book mockup -->
+          <div data-id="118" class="flex justify-center">
+            <div data-id="119" class="book-shadow bg-primary rounded-lg p-6 md:p-8 w-[280px] md:w-[320px] border-4 border-accent/60 relative">
+              <div data-id="120" class="absolute top-0 left-0 w-full h-1 bg-accent rounded-t-sm"></div>
+              <div data-id="121" class="text-center py-8 md:py-12">
+                <div data-id="122" class="w-12 h-12 mx-auto mb-6 flex items-center justify-center">
+                  <svg data-id="123" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#D4A847" stroke-width="1.5"><path data-id="124" d="M12 3c-1.2 0-2.4.6-3 1.7A3.4 3.4 0 0 0 5.7 3C3.7 3 2 4.7 2 6.7c0 2.6 2.4 4.7 6 8.3l4 4 4-4c3.6-3.6 6-5.7 6-8.3C22 4.7 20.3 3 18.3 3c-1.3 0-2.5.7-3.3 1.7-.6-1.1-1.8-1.7-3-1.7z" fill="none"/><path data-id="125" d="M7 8h10M7 12h7" stroke="#D4A847" stroke-width="1.5"/><circle data-id="126" cx="12" cy="16" r="2" fill="#D4A847" opacity="0.3"/></svg>
+                </div>
+                <p data-id="127" class="text-accent text-xs tracking-[0.2em] uppercase mb-4 font-semibold">EFL™ Presents</p>
+                <h3 data-id="128" class="text-accent text-2xl md:text-3xl mb-4 leading-tight" style="font-family: Georgia, serif;">ROOTS &amp;<br data-id="129">REMEDIES</h3>
+                <div data-id="130" class="w-10 h-0.5 bg-accent/40 mx-auto mb-4"></div>
+                <p data-id="131" class="text-primary-light text-sm md:text-base leading-snug px-2">Tallahassee Lore, Land &amp; Holistic Healing for Veterans</p>
+                <div data-id="132" class="mt-8 pt-6 border-t border-sage/20">
+                  <p data-id="133" class="text-sage text-xs tracking-wide">Engaged Frequency Lab (EFL)™</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div data-id="134">
+            <p data-id="135" class="text-dark/80 text-base md:text-lg leading-relaxed mb-6">A comprehensive guide exploring the intersection of Tallahassee's rich botanical heritage, emerging clinical research, and holistic healing practices for veterans.</p>
+            <ul data-id="136" class="space-y-3 mb-8">
+              <li data-id="137" class="flex items-start gap-3 text-dark/75 text-sm md:text-base">
+                <i data-id="138" data-lucide="leaf" class="w-5 h-5 text-accent mt-0.5 shrink-0"></i>
+                <span data-id="139">Tallahassee regional lore, ecology, and native medicinal plants</span>
+              </li>
+              <li data-id="140" class="flex items-start gap-3 text-dark/75 text-sm md:text-base">
+                <i data-id="141" data-lucide="brain" class="w-5 h-5 text-accent mt-0.5 shrink-0"></i>
+                <span data-id="142">Psilocybin-assisted therapy — VA clinical trials and microdosing protocols</span>
+              </li>
+              <li data-id="143" class="flex items-start gap-3 text-dark/75 text-sm md:text-base">
+                <i data-id="144" data-lucide="heart-pulse" class="w-5 h-5 text-accent mt-0.5 shrink-0"></i>
+                <span data-id="145">Medical cannabis — the endocannabinoid system, terpene profiles, and Florida's MMJ program</span>
+              </li>
+              <li data-id="146" class="flex items-start gap-3 text-dark/75 text-sm md:text-base">
+                <i data-id="147" data-lucide="flask-conical" class="w-5 h-5 text-accent mt-0.5 shrink-0"></i>
+                <span data-id="148">Kratom pharmacology and the first NIDA clinical trial</span>
+              </li>
+              <li data-id="149" class="flex items-start gap-3 text-dark/75 text-sm md:text-base">
+                <i data-id="150" data-lucide="scale" class="w-5 h-5 text-accent mt-0.5 shrink-0"></i>
+                <span data-id="151">Legal landscape — federal vs. Florida vs. VA policy</span>
+              </li>
+              <li data-id="152" class="flex items-start gap-3 text-dark/75 text-sm md:text-base">
+                <i data-id="153" data-lucide="shield-alert" class="w-5 h-5 text-accent mt-0.5 shrink-0"></i>
+                <span data-id="154">Harm reduction and critical drug interaction warnings</span>
+              </li>
+              <li data-id="155" class="flex items-start gap-3 text-dark/75 text-sm md:text-base">
+                <i data-id="156" data-lucide="book-open" class="w-5 h-5 text-accent mt-0.5 shrink-0"></i>
+                <span data-id="157">A complete veteran resource directory with verified links</span>
+              </li>
+            </ul>
+            <p data-id="158" class="text-dark/60 text-sm mb-6 italic">Available as a free ebook and companion presentation.</p>
+            <a data-id="159" href="#" class="btn-transition inline-flex items-center gap-2 bg-accent text-primary font-semibold px-6 py-3 rounded-lg hover:bg-accent-hover shadow-md text-base min-h-[44px]">
+              <i data-id="160" data-lucide="download" class="w-5 h-5"></i> Download the Ebook
+            </a>
+            <p data-id="161" class="text-dark/50 text-xs mt-4">Original work by a United States Army Captain and Veteran</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE SCIENCE SECTION -->
+    <section data-id="162" id="science" class="bg-primary py-16 md:py-24 lg:py-28">
+      <div data-id="163" class="fade-section max-w-6xl mx-auto px-5 md:px-8">
+        <div data-id="164" class="text-center mb-5">
+          <h2 data-id="165" class="text-3xl md:text-4xl text-primary-light" style="font-family: Georgia, serif;">The Science</h2>
+          <div data-id="166" class="section-line"></div>
+        </div>
+        <p data-id="167" class="text-sage text-center text-base md:text-lg mb-10 md:mb-14 max-w-2xl mx-auto">Evidence-based research is reshaping how we understand veteran healing</p>
+
+        <div data-id="168" class="grid md:grid-cols-3 gap-6 md:gap-8">
+          <!-- Psilocybin -->
+          <div data-id="169" class="card-hover bg-secondary rounded-xl p-6 md:p-8 border border-sage/10">
+            <div data-id="170" class="w-14 h-14 flex items-center justify-center rounded-xl bg-accent/10 mb-6">
+              <svg data-id="171" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path data-id="172" d="M12 2C8 2 5 5 5 9c0 3.5 3 6 7 6s7-2.5 7-6c0-4-3-7-7-7z"/><line data-id="173" x1="12" y1="15" x2="12" y2="22"/><path data-id="174" d="M9 18h6"/><circle data-id="175" cx="9" cy="7" r="1" fill="#D4A847" opacity="0.5"/><circle data-id="176" cx="14" cy="9" r="1" fill="#D4A847" opacity="0.5"/><circle data-id="177" cx="11" cy="11" r="0.8" fill="#D4A847" opacity="0.5"/></svg>
+            </div>
+            <h3 data-id="178" class="text-primary-light text-lg md:text-xl mb-3" style="font-family: Georgia, serif;">Psilocybin-Assisted Therapy</h3>
+            <p data-id="179" class="text-sage text-sm md:text-base leading-relaxed mb-5">Psilocybin activates serotonin 5-HT2A receptors and disrupts the Default Mode Network — breaking the rigid thought loops of PTSD. The VA is conducting clinical trials at 9 medical centers. The DEA requested 30,000 grams for research in 2026.</p>
+            <div data-id="180" class="inline-block bg-accent/15 text-accent text-sm font-semibold px-4 py-1.5 rounded-full">Breakthrough Therapy</div>
+          </div>
+
+          <!-- Cannabis -->
+          <div data-id="181" class="card-hover bg-secondary rounded-xl p-6 md:p-8 border border-sage/10">
+            <div data-id="182" class="w-14 h-14 flex items-center justify-center rounded-xl bg-accent/10 mb-6">
+              <svg data-id="183" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path data-id="184" d="M12 22V12"/><path data-id="185" d="M12 12c0-4-2-6-5-8 1 3 0 6-2 8 3 0 5 1 7 4z"/><path data-id="186" d="M12 12c0-4 2-6 5-8-1 3 0 6 2 8-3 0-5 1-7 4z"/><path data-id="187" d="M12 8c0-3-1.5-5-4-6.5.5 2.5 0 5-1.5 6.5 2 0 4 1 5.5 3.5z" opacity="0.6"/><path data-id="188" d="M12 8c0-3 1.5-5 4-6.5-.5 2.5 0 5 1.5 6.5-2 0-4 1-5.5 3.5z" opacity="0.6"/></svg>
+            </div>
+            <h3 data-id="189" class="text-primary-light text-lg md:text-xl mb-3" style="font-family: Georgia, serif;">Medical Cannabis &amp; the ECS</h3>
+            <p data-id="190" class="text-sage text-sm md:text-base leading-relaxed mb-5">Your body has a built-in cannabinoid system that regulates mood, pain, sleep, and fear extinction. CB1 receptors in the amygdala play a direct role in how traumatic memories lose their hold. PTSD is a qualifying condition in Florida.</p>
+            <div data-id="191" class="inline-block bg-accent/15 text-accent text-sm font-semibold px-4 py-1.5 rounded-full">38+ States Legal</div>
+          </div>
+
+          <!-- Kratom -->
+          <div data-id="192" class="card-hover bg-secondary rounded-xl p-6 md:p-8 border border-sage/10">
+            <div data-id="193" class="w-14 h-14 flex items-center justify-center rounded-xl bg-accent/10 mb-6">
+              <svg data-id="194" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#D4A847" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path data-id="195" d="M12 22v-8"/><path data-id="196" d="M7 14c-2-2-3-5-2-8 2 1 5 2 7 5 2-3 5-4 7-5 1 3 0 6-2 8"/><path data-id="197" d="M12 14c0-3 1-5 3-7"/><path data-id="198" d="M12 14c0-3-1-5-3-7"/><line data-id="199" x1="10" y1="22" x2="14" y2="22"/><path data-id="200" d="M8 20c-2-1-3-3-3-5" opacity="0.5"/><path data-id="201" d="M16 20c2-1 3-3 3-5" opacity="0.5"/></svg>
+            </div>
+            <h3 data-id="202" class="text-primary-light text-lg md:text-xl mb-3" style="font-family: Georgia, serif;">Kratom &amp; Opioid Alternatives</h3>
+            <p data-id="203" class="text-sage text-sm md:text-base leading-relaxed mb-5">Kratom's primary alkaloid mitragynine activates opioid pain pathways WITHOUT recruiting the beta-arrestin-2 signaling that causes respiratory depression and overdose. NIDA is conducting its first-ever clinical trial of purified mitragynine.</p>
+            <div data-id="204" class="inline-block bg-accent/15 text-accent text-sm font-semibold px-4 py-1.5 rounded-full">Phase 1 Trial Active</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESOURCE DIRECTORY SECTION -->
+    <section data-id="205" id="resources" class="bg-primary-light py-16 md:py-24 lg:py-28">
+      <div data-id="206" class="fade-section max-w-6xl mx-auto px-5 md:px-8">
+        <div data-id="207" class="text-center mb-5">
+          <h2 data-id="208" class="text-3xl md:text-4xl text-dark" style="font-family: Georgia, serif;">Veteran Resource Directory</h2>
+          <div data-id="209" class="section-line"></div>
+        </div>
+        <p data-id="210" class="text-dark/60 text-center text-base md:text-lg mb-10 md:mb-12">Every resource listed here is free or low-cost for veterans</p>
+
+        <!-- CRISIS BAR -->
+        <div data-id="211" id="crisis-bar" class="bg-crisis rounded-xl p-5 md:p-6 mb-10 md:mb-14 text-center shadow-lg">
+          <div data-id="212" class="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-6">
+            <div data-id="213" class="flex items-center gap-2">
+              <i data-id="214" data-lucide="phone-call" class="w-6 h-6 text-white"></i>
+              <span data-id="215" class="text-white font-bold text-lg md:text-xl">IN CRISIS?</span>
+            </div>
+            <div data-id="216" class="text-white text-sm md:text-base">
+              Veterans Crisis Line: <a data-id="217" href="tel:988" class="font-bold underline">Dial 988, Press 1</a> &nbsp;|&nbsp; Text <span data-id="218" class="font-bold">838255</span> &nbsp;|&nbsp; <span data-id="219" class="font-semibold">veteranscrisisline.net</span>
+            </div>
+            <span data-id="220" class="text-white/80 text-sm">Available 24/7</span>
+          </div>
+        </div>
+
+        <!-- Resource Cards Grid -->
+        <div data-id="221" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+          <!-- Resource 1 -->
+          <div data-id="222" class="card-hover bg-white rounded-xl p-5 md:p-6 shadow-sm border border-sage/15">
+            <div data-id="223" class="flex items-start gap-3 mb-3">
+              <div data-id="224" class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary/10 shrink-0">
+                <i data-id="225" data-lucide="building-2" class="w-5 h-5 text-primary"></i>
+              </div>
+              <h4 data-id="226" class="text-dark font-bold text-base md:text-lg" style="font-family: Georgia, serif;">Tallahassee Vet Center</h4>
+            </div>
+            <p data-id="227" class="text-dark/60 text-sm mb-2">Free counseling for combat veterans — no VA enrollment needed.</p>
+            <a data-id="228" href="tel:8509428810" class="text-accent font-semibold text-sm hover:underline">850-942-8810</a>
+          </div>
+
+          <!-- Resource 2 -->
+          <div data-id="229" class="card-hover bg-white rounded-xl p-5 md:p-6 shadow-sm border border-sage/15">
+            <div data-id="230" class="flex items-start gap-3 mb-3">
+              <div data-id="231" class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary/10 shrink-0">
+                <i data-id="232" data-lucide="stethoscope" class="w-5 h-5 text-primary"></i>
+              </div>
+              <h4 data-id="233" class="text-dark font-bold text-base md:text-lg" style="font-family: Georgia, serif;">VA Clinic Tallahassee</h4>
+            </div>
+            <p data-id="234" class="text-dark/60 text-sm mb-2">Primary care, mental health, and specialty services.</p>
+            <a data-id="235" href="tel:8508780191" class="text-accent font-semibold text-sm hover:underline">850-878-0191</a>
+          </div>
+
+          <!-- Resource 3 -->
+          <div data-id="236" class="card-hover bg-white rounded-xl p-5 md:p-6 shadow-sm border border-sage/15">
+            <div data-id="237" class="flex items-start gap-3 mb-3">
+              <div data-id="238" class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary/10 shrink-0">
+                <i data-id="239" data-lucide="cannabis" class="w-5 h-5 text-primary"></i>
+              </div>
+              <h4 data-id="240" class="text-dark font-bold text-base md:text-lg" style="font-family: Georgia, serif;">Veterans Cannabis Care</h4>
+            </div>
+            <p data-id="241" class="text-dark/60 text-sm mb-2">FREE medical marijuana card for qualifying veterans.</p>
+            <span data-id="242" class="text-accent font-semibold text-sm">veteranscannabiscare.org</span>
+          </div>
+
+          <!-- Resource 4 -->
+          <div data-id="243" class="card-hover bg-white rounded-xl p-5 md:p-6 shadow-sm border border-sage/15">
+            <div data-id="244" class="flex items-start gap-3 mb-3">
+              <div data-id="245" class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary/10 shrink-0">
+                <i data-id="246" data-lucide="microscope" class="w-5 h-5 text-primary"></i>
+              </div>
+              <h4 data-id="247" class="text-dark font-bold text-base md:text-lg" style="font-family: Georgia, serif;">STARLIGHT Trial (Baylor)</h4>
+            </div>
+            <p data-id="248" class="text-dark/60 text-sm mb-2">Psilocybin clinical trial — currently recruiting veterans.</p>
+            <a data-id="249" href="tel:8322716615" class="text-accent font-semibold text-sm hover:underline">832-271-6615</a>
+          </div>
+
+          <!-- Resource 5 -->
+          <div data-id="250" class="card-hover bg-white rounded-xl p-5 md:p-6 shadow-sm border border-sage/15">
+            <div data-id="251" class="flex items-start gap-3 mb-3">
+              <div data-id="252" class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary/10 shrink-0">
+                <i data-id="253" data-lucide="file-text" class="w-5 h-5 text-primary"></i>
+              </div>
+              <h4 data-id="254" class="text-dark font-bold text-base md:text-lg" style="font-family: Georgia, serif;">FL OMMU</h4>
+            </div>
+            <p data-id="255" class="text-dark/60 text-sm mb-2">Medical marijuana info and physician finder for Florida.</p>
+            <span data-id="256" class="text-accent font-semibold text-sm">knowthefactsmmj.com</span>
+          </div>
+
+          <!-- Resource 6 -->
+          <div data-id="257" class="card-hover bg-white rounded-xl p-5 md:p-6 shadow-sm border border-sage/15">
+            <div data-id="258" class="flex items-start gap-3 mb-3">
+              <div data-id="259" class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary/10 shrink-0">
+                <i data-id="260" data-lucide="heart-handshake" class="w-5 h-5 text-primary"></i>
+              </div>
+              <h4 data-id="261" class="text-dark font-bold text-base md:text-lg" style="font-family: Georgia, serif;">Cohen Veterans Network</h4>
+            </div>
+            <p data-id="262" class="text-dark/60 text-sm mb-2">Free mental health care at 22 clinics nationwide.</p>
+            <span data-id="263" class="text-accent font-semibold text-sm">cohenveteransnetwork.org</span>
+          </div>
+
+          <!-- Resource 7 -->
+          <div data-id="264" class="card-hover bg-white rounded-xl p-5 md:p-6 shadow-sm border border-sage/15">
+            <div data-id="265" class="flex items-start gap-3 mb-3">
+              <div data-id="266" class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary/10 shrink-0">
+                <i data-id="267" data-lucide="phone" class="w-5 h-5 text-primary"></i>
+              </div>
+              <h4 data-id="268" class="text-dark font-bold text-base md:text-lg" style="font-family: Georgia, serif;">SAMHSA Veterans</h4>
+            </div>
+            <p data-id="269" class="text-dark/60 text-sm mb-2">National behavioral health resources and referrals.</p>
+            <a data-id="270" href="tel:18006624357" class="text-accent font-semibold text-sm hover:underline">1-800-662-4357</a>
+          </div>
+
+          <!-- Resource 8 -->
+          <div data-id="271" class="card-hover bg-white rounded-xl p-5 md:p-6 shadow-sm border border-sage/15">
+            <div data-id="272" class="flex items-start gap-3 mb-3">
+              <div data-id="273" class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary/10 shrink-0">
+                <i data-id="274" data-lucide="activity" class="w-5 h-5 text-primary"></i>
+              </div>
+              <h4 data-id="275" class="text-dark font-bold text-base md:text-lg" style="font-family: Georgia, serif;">VA Whole Health</h4>
+            </div>
+            <p data-id="276" class="text-dark/60 text-sm mb-2">Integrative health approaches within the VA system.</p>
+            <span data-id="277" class="text-accent font-semibold text-sm">va.gov/wholehealth</span>
+          </div>
+
+          <!-- Resource 9 -->
+          <div data-id="278" class="card-hover bg-white rounded-xl p-5 md:p-6 shadow-sm border border-sage/15">
+            <div data-id="279" class="flex items-start gap-3 mb-3">
+              <div data-id="280" class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary/10 shrink-0">
+                <i data-id="281" data-lucide="search" class="w-5 h-5 text-primary"></i>
+              </div>
+              <h4 data-id="282" class="text-dark font-bold text-base md:text-lg" style="font-family: Georgia, serif;">ClinicalTrials.gov</h4>
+            </div>
+            <p data-id="283" class="text-dark/60 text-sm mb-2">Search "psilocybin veterans PTSD" for active trials.</p>
+            <span data-id="284" class="text-accent font-semibold text-sm">clinicaltrials.gov</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KNOW YOUR RIGHTS SECTION -->
+    <section data-id="285" id="rights-k2m4" class="bg-secondary py-14 md:py-20">
+      <div data-id="286" class="fade-section max-w-6xl mx-auto px-5 md:px-8">
+        <div data-id="287" class="text-center mb-10 md:mb-12">
+          <h2 data-id="288" class="text-2xl md:text-3xl text-accent" style="font-family: Georgia, serif;">Know Your Rights</h2>
+          <div data-id="289" class="section-line"></div>
+        </div>
+
+        <div data-id="290" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+          <div data-id="291" class="text-center p-5 md:p-6">
+            <div data-id="292" class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full bg-accent/15">
+              <i data-id="293" data-lucide="shield-check" class="w-6 h-6 text-accent"></i>
+            </div>
+            <p data-id="294" class="text-primary-light font-bold text-sm md:text-base mb-2">VA will NOT deny healthcare for legal cannabis use</p>
+            <p data-id="295" class="text-sage text-xs md:text-sm">VHA Directive 1315</p>
+          </div>
+
+          <div data-id="296" class="text-center p-5 md:p-6">
+            <div data-id="297" class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full bg-accent/15">
+              <i data-id="298" data-lucide="lock" class="w-6 h-6 text-accent"></i>
+            </div>
+            <p data-id="299" class="text-primary-light font-bold text-sm md:text-base mb-2">VA cannot report you to law enforcement</p>
+            <p data-id="300" class="text-sage text-xs md:text-sm">Your medical choices are protected</p>
+          </div>
+
+          <div data-id="301" class="text-center p-5 md:p-6">
+            <div data-id="302" class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full bg-accent/15">
+              <i data-id="303" data-lucide="check-circle-2" class="w-6 h-6 text-accent"></i>
+            </div>
+            <p data-id="304" class="text-primary-light font-bold text-sm md:text-base mb-2">PTSD is a qualifying condition</p>
+            <p data-id="305" class="text-sage text-xs md:text-sm">For Florida medical marijuana</p>
+          </div>
+
+          <div data-id="306" class="text-center p-5 md:p-6">
+            <div data-id="307" class="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-full bg-accent/15">
+              <i data-id="308" data-lucide="landmark" class="w-6 h-6 text-accent"></i>
+            </div>
+            <p data-id="309" class="text-primary-light font-bold text-sm md:text-base mb-2">House voted 290–116</p>
+            <p data-id="310" class="text-sage text-xs md:text-sm">June 2025 amendment lifting VA cannabis recommendation restrictions</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHERE DO I START? SECTION -->
+    <section data-id="311" id="start" class="bg-primary-light py-16 md:py-24 lg:py-28">
+      <div data-id="312" class="fade-section max-w-3xl mx-auto px-5 md:px-8">
+        <div data-id="313" class="text-center mb-5">
+          <h2 data-id="314" class="text-3xl md:text-4xl text-dark" style="font-family: Georgia, serif;">Where Do I Start?</h2>
+          <div data-id="315" class="section-line"></div>
+        </div>
+        <p data-id="316" class="text-dark/60 text-center text-base md:text-lg mb-10 md:mb-14">A Veteran's Decision Guide</p>
+
+        <div data-id="317" class="space-y-6">
+          <!-- Step 1 — Crisis -->
+          <div data-id="318" class="flex items-start gap-4 md:gap-6">
+            <div data-id="319" class="step-circle bg-crisis text-white shrink-0">1</div>
+            <div data-id="320" class="pt-1">
+              <h4 data-id="321" class="text-dark font-bold text-base md:text-lg" style="font-family: Georgia, serif;">In Crisis?</h4>
+              <p data-id="322" class="text-dark/70 text-sm md:text-base">Call <a data-id="323" href="tel:988" class="font-bold text-crisis hover:underline">988, Press 1</a>. Do not wait.</p>
+            </div>
+          </div>
+
+          <div data-id="324" class="ml-[22px] w-0.5 h-4 bg-sage/30"></div>
+
+          <!-- Step 2 -->
+          <div data-id="325" class="flex items-start gap-4 md:gap-6">
+            <div data-id="326" class="step-circle bg-accent text-primary shrink-0">2</div>
+            <div data-id="327" class="pt-1">
+              <h4 data-id="328" class="text-dark font-bold text-base md:text-lg" style="font-family: Georgia, serif;">Need Counseling?</h4>
+              <p data-id="329" class="text-dark/70 text-sm md:text-base">Tallahassee Vet Center: <a data-id="330" href="tel:8509428810" class="font-semibold text-accent hover:underline">850-942-8810</a> (free, no enrollment)</p>
+            </div>
+          </div>
+
+          <div data-id="331" class="ml-[22px] w-0.5 h-4 bg-sage/30"></div>
+
+          <!-- Step 3 -->
+          <div data-id="332" class="flex items-start gap-4 md:gap-6">
+            <div data-id="333" class="step-circle bg-accent text-primary shrink-0">3</div>
+            <div data-id="334" class="pt-1">
+              <h4 data-id="335" class="text-dark font-bold text-base md:text-lg" style="font-family: Georgia, serif;">Medical Cannabis?</h4>
+              <p data-id="336" class="text-dark/70 text-sm md:text-base">Veterans Cannabis Care: <span data-id="337" class="font-semibold text-accent">veteranscannabiscare.org</span> (free for vets)</p>
+            </div>
+          </div>
+
+          <div data-id="338" class="ml-[22px] w-0.5 h-4 bg-sage/30"></div>
+
+          <!-- Step 4 -->
+          <div data-id="339" class="flex items-start gap-4 md:gap-6">
+            <div data-id="340" class="step-circle bg-accent text-primary shrink-0">4</div>
+            <div data-id="341" class="pt-1">
+              <h4 data-id="342" class="text-dark font-bold text-base md:text-lg" style="font-family: Georgia, serif;">Psilocybin Research?</h4>
+              <p data-id="343" class="text-dark/70 text-sm md:text-base">ClinicalTrials.gov — STARLIGHT trial: <a data-id="344" href="tel:8322716615" class="font-semibold text-accent hover:underline">832-271-6615</a></p>
+            </div>
+          </div>
+
+          <div data-id="345" class="ml-[22px] w-0.5 h-4 bg-sage/30"></div>
+
+          <!-- Step 5 -->
+          <div data-id="346" class="flex items-start gap-4 md:gap-6">
+            <div data-id="347" class="step-circle bg-accent text-primary shrink-0">5</div>
+            <div data-id="348" class="pt-1">
+              <h4 data-id="349" class="text-dark font-bold text-base md:text-lg" style="font-family: Georgia, serif;">Nature Therapy?</h4>
+              <p data-id="350" class="text-dark/70 text-sm md:text-base">Apalachicola National Forest — 20 min from downtown Tallahassee, free</p>
+            </div>
+          </div>
+
+          <div data-id="351" class="ml-[22px] w-0.5 h-4 bg-sage/30"></div>
+
+          <!-- Step 6 -->
+          <div data-id="352" class="flex items-start gap-4 md:gap-6">
+            <div data-id="353" class="step-circle bg-accent text-primary shrink-0">6</div>
+            <div data-id="354" class="pt-1">
+              <h4 data-id="355" class="text-dark font-bold text-base md:text-lg" style="font-family: Georgia, serif;">Already Self-Medicating?</h4>
+              <p data-id="356" class="text-dark/70 text-sm md:text-base">Tell your VA provider — they <strong data-id="357">CANNOT</strong> deny care (VHA Directive 1315)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GET INVOLVED / CONTACT SECTION -->
+    <section data-id="358" id="contact" class="bg-primary py-16 md:py-24 lg:py-28">
+      <div data-id="359" class="fade-section max-w-6xl mx-auto px-5 md:px-8">
+        <div data-id="360" class="text-center mb-5">
+          <h2 data-id="361" class="text-3xl md:text-4xl text-primary-light" style="font-family: Georgia, serif;">Get Involved</h2>
+          <div data-id="362" class="section-line"></div>
+        </div>
+        <p data-id="363" class="text-sage text-center text-base md:text-lg mb-10 md:mb-14 max-w-2xl mx-auto">Join the mission. Support a veteran. Share the resources.</p>
+
+        <div data-id="364" class="grid md:grid-cols-3 gap-6 md:gap-8 mb-14 md:mb-18">
+          <!-- Share -->
+          <div data-id="365" class="card-hover bg-secondary rounded-xl p-6 md:p-8 border border-sage/10 text-center">
+            <div data-id="366" class="w-14 h-14 mx-auto flex items-center justify-center rounded-xl bg-accent/10 mb-5">
+              <i data-id="367" data-lucide="share-2" class="w-7 h-7 text-accent"></i>
+            </div>
+            <h3 data-id="368" class="text-primary-light text-xl mb-3" style="font-family: Georgia, serif;">Share Resources</h3>
+            <p data-id="369" class="text-sage text-sm md:text-base leading-relaxed">Help us reach veterans who need these tools. Download and distribute the Roots &amp; Remedies ebook and flyer at your local Vet Center, VFW post, or peer support group.</p>
+          </div>
+
+          <!-- Connect -->
+          <div data-id="370" class="card-hover bg-secondary rounded-xl p-6 md:p-8 border border-sage/10 text-center">
+            <div data-id="371" class="w-14 h-14 mx-auto flex items-center justify-center rounded-xl bg-accent/10 mb-5">
+              <i data-id="372" data-lucide="mail" class="w-7 h-7 text-accent"></i>
+            </div>
+            <h3 data-id="373" class="text-primary-light text-xl mb-3" style="font-family: Georgia, serif;">Connect With Us</h3>
+            <p data-id="374" class="text-sage text-sm md:text-base leading-relaxed mb-3">Based in Tallahassee, FL. We welcome partnerships with veteran organizations, healthcare providers, and researchers.</p>
+            <p data-id="375" class="text-accent font-semibold text-sm">engagedfrequencylab@gmail.com</p>
+          </div>
+
+          <!-- Spread -->
+          <div data-id="376" class="card-hover bg-secondary rounded-xl p-6 md:p-8 border border-sage/10 text-center">
+            <div data-id="377" class="w-14 h-14 mx-auto flex items-center justify-center rounded-xl bg-accent/10 mb-5">
+              <i data-id="378" data-lucide="megaphone" class="w-7 h-7 text-accent"></i>
+            </div>
+            <h3 data-id="379" class="text-primary-light text-xl mb-3" style="font-family: Georgia, serif;">Spread the Word</h3>
+            <p data-id="380" class="text-sage text-sm md:text-base leading-relaxed">Follow EFL™ on social media. Share our resources with veterans and families in your community. Every share could save a life.</p>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div data-id="381" class="max-w-xl mx-auto bg-secondary rounded-xl p-6 md:p-8 border border-sage/10">
+          <h3 data-id="382" class="text-primary-light text-xl md:text-2xl text-center mb-6" style="font-family: Georgia, serif;">Send Us a Message</h3>
+          <form data-id="383" id="contact-form-g7h2" class="space-y-4">
+            <div data-id="384">
+              <label data-id="385" for="name-input-m3n4" class="block text-sage text-sm mb-1.5">Name</label>
+              <input data-id="386" type="text" id="name-input-m3n4" class="form-input bg-primary-light" placeholder="Your name" />
+            </div>
+            <div data-id="387">
+              <label data-id="388" for="email-input-p5q6" class="block text-sage text-sm mb-1.5">Email</label>
+              <input data-id="389" type="email" id="email-input-p5q6" class="form-input bg-primary-light" placeholder="your@email.com" />
+            </div>
+            <div data-id="390">
+              <label data-id="391" for="message-input-r7s8" class="block text-sage text-sm mb-1.5">Message</label>
+              <textarea data-id="392" id="message-input-r7s8" rows="4" class="form-input bg-primary-light resize-none" placeholder="How can we help?"></textarea>
+            </div>
+            <button data-id="393" type="submit" id="submit-btn-t9u0" class="btn-transition w-full bg-accent text-primary font-semibold py-3.5 rounded-lg hover:bg-accent-hover shadow-md text-base min-h-[44px] flex items-center justify-center gap-2 cursor-pointer">
+              <i data-id="394" data-lucide="send" class="w-5 h-5"></i> Send Message
+            </button>
+          </form>
+          <div data-id="395" id="form-success-v1w2" class="hidden mt-4 text-center">
+            <div data-id="396" class="bg-accent/15 text-accent rounded-lg py-3 px-4 text-sm font-semibold">
+              <i data-id="397" data-lucide="check-circle-2" class="w-5 h-5 inline mr-1 -mt-0.5"></i> Thank you for reaching out. We'll be in touch.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer data-id="398" class="bg-footer py-12 md:py-16">
+      <div data-id="399" class="max-w-6xl mx-auto px-5 md:px-8">
+        <div data-id="400" class="grid md:grid-cols-3 gap-8 md:gap-12 mb-10">
+          <!-- Brand -->
+          <div data-id="401">
+            <span data-id="402" class="text-accent font-bold text-2xl block mb-3" style="font-family: Georgia, serif;">EFL™</span>
+            <p data-id="403" class="text-sage text-sm italic mb-4" style="font-family: Georgia, serif;">Frequency. Focus. Forward.</p>
+            <p data-id="404" class="text-sage/60 text-xs">&copy; 2026 Engaged Frequency Lab (EFL)™. All rights reserved.</p>
+          </div>
+
+          <!-- Quick Links -->
+          <div data-id="405">
+            <h4 data-id="406" class="text-primary-light font-semibold text-sm uppercase tracking-wider mb-4">Quick Links</h4>
+            <div data-id="407" class="space-y-2">
+              <a data-id="408" href="#mission" class="block text-sage hover:text-accent transition-colors text-sm">Mission</a>
+              <a data-id="409" href="#services" class="block text-sage hover:text-accent transition-colors text-sm">Services</a>
+              <a data-id="410" href="#resources" class="block text-sage hover:text-accent transition-colors text-sm">Resources</a>
+              <a data-id="411" href="#contact" class="block text-sage hover:text-accent transition-colors text-sm">Get Involved</a>
+            </div>
+          </div>
+
+          <!-- Info -->
+          <div data-id="412">
+            <h4 data-id="413" class="text-primary-light font-semibold text-sm uppercase tracking-wider mb-4">About</h4>
+            <p data-id="414" class="text-sage text-sm mb-2">Original Work by a United States Army Captain and Veteran</p>
+            <p data-id="415" class="text-sage/60 text-sm">Tallahassee, Florida</p>
+          </div>
+        </div>
+
+        <!-- Bottom bar -->
+        <div data-id="416" class="border-t border-sage/15 pt-6 space-y-3">
+          <p data-id="417" class="text-sage/50 text-xs text-center leading-relaxed">This website is for educational and informational purposes only. It is not medical advice. Always consult a qualified healthcare provider.</p>
+          <p data-id="418" class="text-center">
+            <a data-id="419" href="tel:988" class="text-crisis/80 hover:text-crisis text-xs font-semibold transition-colors">Veterans Crisis Line: Dial 988, Press 1</a>
+          </p>
+          <p data-id="420" class="text-sage/40 text-xs text-center">Made by Copilot</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      lucide.createIcons();
+
+      // --- Navbar scroll behavior ---
+      const navbar = document.getElementById('navbar-e8f1');
+      let lastScroll = 0;
+
+      window.addEventListener('scroll', function() {
+        const scrollY = window.scrollY;
+        if (scrollY > 60) {
+          navbar.classList.add('navbar-scrolled');
+        } else {
+          navbar.classList.remove('navbar-scrolled');
+        }
+        lastScroll = scrollY;
+      });
+
+      // --- Mobile menu ---
+      const mobileMenuOverlay = document.getElementById('mobile-menu-overlay-b7d3');
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn-a4c2');
+      const mobileMenuClose = document.getElementById('mobile-menu-close-d2e5');
+
+      function openMobileMenu() {
+        mobileMenuOverlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMobileMenu() {
+        mobileMenuOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      mobileMenuBtn.addEventListener('click', openMobileMenu);
+      mobileMenuClose.addEventListener('click', closeMobileMenu);
+
+      // Close on overlay click
+      mobileMenuOverlay.addEventListener('click', function(e) {
+        if (e.target === mobileMenuOverlay) {
+          closeMobileMenu();
+        }
+      });
+
+      // Close on nav link click
+      document.querySelectorAll('.mobile-nav-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+          closeMobileMenu();
+        });
+      });
+
+      // --- Fade-in on scroll ---
+      const fadeSections = document.querySelectorAll('.fade-section');
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -80px 0px',
+        threshold: 0.1
+      };
+
+      const fadeObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            fadeObserver.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      fadeSections.forEach(function(section) {
+        fadeObserver.observe(section);
+      });
+
+      // --- Contact form submission ---
+      const contactForm = document.getElementById('contact-form-g7h2');
+      const formSuccess = document.getElementById('form-success-v1w2');
+      const submitBtn = document.getElementById('submit-btn-t9u0');
+
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const nameVal = document.getElementById('name-input-m3n4').value.trim();
+        const emailVal = document.getElementById('email-input-p5q6').value.trim();
+        const msgVal = document.getElementById('message-input-r7s8').value.trim();
+
+        if (!nameVal || !emailVal || !msgVal) {
+          return;
+        }
+
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+
+        setTimeout(function() {
+          contactForm.style.display = 'none';
+          formSuccess.classList.remove('hidden');
+          lucide.createIcons();
+        }, 1200);
+      });
+
+      // --- Smooth scroll for anchor links (fallback for older browsers) ---
+      document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          const target = document.querySelector(targetId);
+          if (target) {
+            e.preventDefault();
+            const navHeight = navbar.offsetHeight;
+            const targetPos = target.getBoundingClientRect().top + window.scrollY - navHeight;
+            window.scrollTo({
+              top: targetPos,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+
+      // Trigger initial scroll check for navbar
+      window.dispatchEvent(new Event('scroll'));
+    </script>
+</body>
+</html>
